@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Soenneker.Dtos.Results.Api.csproj" />
+        <ProjectReference Include="..\..\src\Soenneker.Dtos.Results.Api\Soenneker.Dtos.Results.Api.csproj" />
     </ItemGroup>
 
     <ItemGroup>
