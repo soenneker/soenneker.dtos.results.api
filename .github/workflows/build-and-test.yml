@@ -38,7 +38,7 @@ jobs:
         run: dotnet build test/Soenneker.Dtos.Results.Api.Tests/Soenneker.Dtos.Results.Api.Tests.csproj --configuration Release --no-restore --verbosity minimal
 
       - name: Test
-        run: dotnet test test/Soenneker.Dtos.Results.Api.Tests/Soenneker.Dtos.Results.Api.Tests.csproj --configuration Release --no-build --no-restore --verbosity minimal
+        run: dotnet test --project test/Soenneker.Dtos.Results.Api.Tests/Soenneker.Dtos.Results.Api.Tests.csproj --configuration Release --no-build --no-restore --verbosity minimal
 
       - name: Pack
         run: dotnet pack src/Soenneker.Dtos.Results.Api/Soenneker.Dtos.Results.Api.csproj --configuration Release --no-build --no-restore --output . --verbosity minimal
