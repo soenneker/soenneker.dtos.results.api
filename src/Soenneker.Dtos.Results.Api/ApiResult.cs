@@ -35,10 +35,14 @@ public sealed class ApiResult<T>
     /// <summary>
     /// Creates a successful result.
     /// </summary>
+    /// <param name="value">Payload carried by the successful result.</param>
+    /// <returns>The newly created API Result.</returns>
     public static ApiResult<T> Success(T value) => new() { Value = value };
 
     /// <summary>
     /// Creates a failed result with problem details.
     /// </summary>
+    /// <param name="problem">Problem for the failure operation.</param>
+    /// <returns>The newly created API Result.</returns>
     public static ApiResult<T> Failure(ProblemDetailsDto problem) => new() { Problem = problem };
 }
