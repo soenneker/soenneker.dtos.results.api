@@ -5,7 +5,7 @@
 
 # Soenneker.Dtos.Results.Api
 
-A generic container for API responses with ProblemDetails support.
+A generic API response envelope that carries either a typed value or problem-details payload and works with both `System.Text.Json` and Newtonsoft.Json.
 
 ## Install
 
@@ -13,15 +13,36 @@ A generic container for API responses with ProblemDetails support.
 dotnet add package Soenneker.Dtos.Results.Api
 ```
 
-## What you get
+## Create results
 
-- `ApiResult<T>` — A generic container for API responses with ProblemDetails support.
+```csharp
+using Soenneker.Dtos.ProblemDetails;
+using Soenneker.Dtos.Results.Api;
 
-## API at a glance
+ApiResult<OrderDto> success = ApiResult<OrderDto>.Success(order);
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `ApiResult<T>.Value` | The value returned if the operation was successful. | The value returned if the operation was successful. |
-| `ApiResult<T>.Problem` | RFC 7807 problem details when the operation fails. | RFC 7807 problem details when the operation fails. |
-| `ApiResult<T>.IsSuccess` | True if the result represents a success; false if it contains a problem. | True if the result represents a success; false if it contains a problem. |
-| `ApiResult<T>.Failure(problem)` | Creates a failed result with problem details. | Returns `ApiResult<T>`. |
+ApiResult<OrderDto> failure = ApiResult<OrderDto>.Failure(new ProblemDetailsDto
+{
+    Type = "https://api.example.com/problems/order-not-found",
+    Title = "Order not found",
+    Status = 404,
+    Detail = "No order exists with id 42."
+});
+```
+
+## Consume a result
+
+```csharp
+if (result.IsSuccess)
+{
+    OrderDto? order = result.Value;
+}
+else
+{
+    ProblemDetailsDto problem = result.Problem!;
+}
+```
+
+`IsSuccess` is a convenience property and is not serialized. Its definition is simply `Problem is null`; it does not inspect `Value` or an HTTP status code. Consequently, a default `ApiResult<T>` is considered successful even though its value is null, and if both properties are populated the result is considered a failure.
+
+The properties remain mutable for serializer compatibility, so prefer the `Success` and `Failure` factories when creating results. Null members are included or omitted according to your serializer settings. The DTO does not set an HTTP response's status code.
