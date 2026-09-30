@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Soenneker.Dtos.ProblemDetails;
+﻿using Soenneker.Dtos.ProblemDetails;
 using System.Text.Json.Serialization;
 using Soenneker.Attributes.PublicOpenApiObject;
 
@@ -15,20 +14,17 @@ public sealed class ApiResult<T>
     /// The value returned if the operation was successful.
     /// </summary>
     [JsonPropertyName("value")]
-    [JsonProperty("value")]
     public T? Value { get; set; }
 
     /// <summary>
     /// RFC 7807 problem details when the operation fails.
     /// </summary>
     [JsonPropertyName("problem")]
-    [JsonProperty("problem")]
     public ProblemDetailsDto? Problem { get; set; }
 
     /// <summary>
     /// True if the result represents a success; false if it contains a problem.
     /// </summary>
-    [Newtonsoft.Json.JsonIgnore]
     [System.Text.Json.Serialization.JsonIgnore]
     public bool IsSuccess => Problem is null;
 

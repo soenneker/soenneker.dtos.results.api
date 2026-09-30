@@ -5,7 +5,7 @@
 
 # Soenneker.Dtos.Results.Api
 
-A generic API response envelope that carries either a typed value or problem-details payload and works with both `System.Text.Json` and Newtonsoft.Json.
+A generic API response envelope that carries either a typed value or problem-details payload and works with `System.Text.Json`.
 
 ## Install
 
